@@ -3,16 +3,21 @@ Authors: Matthew Robinson, Antonio Munoz
 Date: 11/23/20
 Class: CSE 489 ML
 Description: KNN Visualizer
-To-Do: Roll our own random points generator
+Sources:
+    - For color graph:      https://pythonspot.com/k-nearest-neighbors/
+    - For helper functions: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 '''
 
 
 
 # Standard powerful python tools
+#import matplotlib
+#matplotlib.use('GTK3Agg')
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import random
 
 # Used for splitting the data
 from sklearn.model_selection import train_test_split
@@ -27,7 +32,7 @@ from sklearn.metrics import accuracy_score
 
 from matplotlib.colors import ListedColormap
 from sklearn import neighbors, datasets
-from numpy import random
+#from numpy import random
 
 
 '''
@@ -60,41 +65,39 @@ def get_neighbors(train, test_row, num_neighbors):
 	return neighbors
 
 
-'''
-Description: Generate random points
-Param num_points: The number of random points to generate
-
-Mostly taken from this (https://stackoverflow.com/questions/19668463/generating-multiple-random-x-y-coordinates-excluding-duplicates)
-Will roll our own later, using this for testing purposes
-'''
-def generate_points(num_points):
-    radius = 200
-    rangeX = (0, 100)
-    rangeY = (0, 100)
-
-    # Generate a set of all points within 200 of the origin, to be used as offsets later
-    # There's probably a more efficient way to do this.
-    deltas = set()
-    for x in range(-radius, radius+1):
-        for y in range(-radius, radius+1):
-            if x*x + y*y <= radius*radius:
-                deltas.add((x,y))
-
-    randPoints = []
-    excluded = set()
-    for i in range(0,num_points):
-        while i<qty:
-            x = random.randrange(*rangeX)
-            y = random.randrange(*rangeY)
-            if (x,y) in excluded: continue
-            randPoints.append((x,y))
-            excluded.update((x+dx, y+dy) for (dx,dy) in deltas)
-
-    print (randPoints)
-
 
 def main():
-    generate_points(40);
+    # Step size
+    h = 0.2
+    # Randomly generate num_points up to max_value
+    num_points = 20
+    max_value = 50
+    coords = np.random.rand(num_points, 2) * max_value
+
+    # Extracting x and y coordinates
+    x_coords = []
+    y_coords = []
+    for coord in coords:
+        x_coords.append(coord[0])
+        y_coords.append(coord[1])
+
+
+    # Calculating min, max, and limits
+    x_min, x_max = min(x_coords), max(x_coords)
+    y_min, y_max = min(y_coords), max(y_coords)
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+    print(xx)
+    print(yy)
+
+
+    plt.figure()
+    plt.scatter(x_coords,y_coords)
+    plt.xlim(xx.min(), xx.max())
+    plt.ylim(yy.min(), yy.max())
+    plt.title("Data points")
+    plt.show()
+
+
 
 if __name__=="__main__":
     main()
