@@ -65,13 +65,12 @@ def get_neighbors(train, test_row, num_neighbors):
 	return neighbors
 
 
-
 def main():
     # Step size
-    h = 0.2
+    h = 5
     # Randomly generate num_points up to max_value
     num_points = 20
-    max_value = 50
+    max_value = 100
     coords = np.random.rand(num_points, 2) * max_value
 
     # Extracting x and y coordinates
@@ -83,12 +82,13 @@ def main():
 
 
     # Calculating min, max, and limits
-    x_min, x_max = min(x_coords), max(x_coords)
-    y_min, y_max = min(y_coords), max(y_coords)
+    x_min, x_max = min(x_coords) - 1, max(x_coords) + 1
+    y_min, y_max = min(y_coords) - 1, max(y_coords) + 1
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-    print(xx)
-    print(yy)
 
+    # Create color maps
+    cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF'])
+    cmap_bold = ListedColormap(['#FF0000', '#00FF00','#00AAFF'])
 
     plt.figure()
     plt.scatter(x_coords,y_coords)
