@@ -18,6 +18,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import random
+import csv
 
 # Used for splitting the data
 from sklearn.model_selection import train_test_split
@@ -66,7 +67,10 @@ def get_neighbors(train, test_row, num_neighbors):
 
 
 def main():
-    # Step size
+    #num_classes = 3
+    classes = ['Blue', 'Green', 'Red']
+    num_neighbors = 5
+    # Step size for graph
     h = 5
     # Randomly generate num_points up to max_value
     num_points = 20
@@ -80,6 +84,17 @@ def main():
         x_coords.append(coord[0])
         y_coords.append(coord[1])
 
+    # Creating a points.csv file with our randomly generated points
+    with open('points.csv', 'w') as csvfile:
+        filewriter = csv.writer(csvfile, delimiter=',',
+                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        filewriter.writerow(['X', 'Y', 'Color'])
+        for coord in coords:
+            filewriter.writerow([coord[0], coord[1], random.choice(classes)])
+
+    # Assigning the newly created csv file to a variable
+    points = pd.read_csv('points.csv')
+    y = points['Color'].values
 
     # Calculating min, max, and limits
     x_min, x_max = min(x_coords) - 1, max(x_coords) + 1
@@ -90,11 +105,23 @@ def main():
     cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF'])
     cmap_bold = ListedColormap(['#FF0000', '#00FF00','#00AAFF'])
 
+    # we create an instance of Neighbours Classifier and fit the data.
+    clf = neighbors.KNeighborsClassifier(num_neighbors, weights='distance')
+    # X is training data and y is targets
+    clf.fit(coords, y)
+
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+
+
     plt.figure()
-    plt.scatter(x_coords,y_coords)
+    plt.pcolormesh(xx, yy, Z, cmap=cmap_light, shading='auto')
+
+
+    plt.scatter(x_coords, y_coords, c=y, cmap=cmap_bold)
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
-    plt.title("Data points")
+    plt.title("3-Class classification (k = %i)" % (num_neighbors))
     plt.show()
 
 
