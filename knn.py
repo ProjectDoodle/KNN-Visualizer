@@ -67,15 +67,25 @@ def get_neighbors(train, test_row, num_neighbors):
 
 
 def main():
-    #num_classes = 3
-    classes = ['Blue', 'Green', 'Red']
+    # Number of data categories
+    num_classes = 3
+    classes = []
+
+    # Specifiying k
     num_neighbors = 5
+
     # Step size for graph
     h = 5
+
     # Randomly generate num_points up to max_value
     num_points = 20
     max_value = 100
     coords = np.random.rand(num_points, 2) * max_value
+
+    # Array containing each class (0...n), where each element
+    # corresponds to a color
+    for i in range(0,num_classes):
+        classes.append(i)
 
     # Extracting x and y coordinates
     x_coords = []
@@ -84,7 +94,7 @@ def main():
         x_coords.append(coord[0])
         y_coords.append(coord[1])
 
-    # Creating a points.csv file with our randomly generated points
+    # Creating a points.csv file with our randomly generated points and categories
     with open('points.csv', 'w') as csvfile:
         filewriter = csv.writer(csvfile, delimiter=',',
                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -105,9 +115,8 @@ def main():
     cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF'])
     cmap_bold = ListedColormap(['#FF0000', '#00FF00','#00AAFF'])
 
-    # we create an instance of Neighbours Classifier and fit the data.
+    # We create an instance of Neighbours Classifier and fit the data.
     clf = neighbors.KNeighborsClassifier(num_neighbors, weights='distance')
-    # X is training data and y is targets
     clf.fit(coords, y)
 
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
@@ -115,9 +124,7 @@ def main():
 
 
     plt.figure()
-    plt.pcolormesh(xx, yy, Z, cmap=cmap_light, shading='auto')
-
-
+    plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
     plt.scatter(x_coords, y_coords, c=y, cmap=cmap_bold)
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
