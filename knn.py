@@ -6,6 +6,9 @@ Description: KNN Visualizer
 Sources:
     - For color graph:      https://pythonspot.com/k-nearest-neighbors/
     - For helper functions: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
+To-Do:
+    - Add a new (black) point and dipslay k closest neighbors with distance
+    - Interface with GUI
 '''
 
 
@@ -33,7 +36,6 @@ from sklearn.metrics import accuracy_score
 
 from matplotlib.colors import ListedColormap
 from sklearn import neighbors, datasets
-#from numpy import random
 
 
 '''
@@ -112,8 +114,18 @@ def main():
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
     # Create color maps
-    cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF'])
-    cmap_bold = ListedColormap(['#FF0000', '#00FF00','#00AAFF'])
+    if (num_classes == 2):
+        cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA'])
+        cmap_bold = ListedColormap(['#FF0000', '#00FF00'])
+    elif (num_classes == 3):
+        cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF'])
+        cmap_bold = ListedColormap(['#FF0000', '#00FF00','#0011FF'])
+    elif (num_classes == 4):
+        cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF', '#FF8100'])
+        cmap_bold = ListedColormap(['#FF0000', '#00FF00','#0011FF', '#FFCE00'])
+    elif (num_classes == 5):
+        cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF', '#FF8100', '#F000FF'])
+        cmap_bold = ListedColormap(['#FF0000', '#00FF00','#0011FF', '#FFCE00', '#FF00DB'])
 
     # We create an instance of Neighbours Classifier and fit the data.
     clf = neighbors.KNeighborsClassifier(num_neighbors, weights='distance')
@@ -122,13 +134,13 @@ def main():
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
 
-
+    # Setting up the plot
     plt.figure()
     plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
     plt.scatter(x_coords, y_coords, c=y, cmap=cmap_bold)
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
-    plt.title("3-Class classification (k = %i)" % (num_neighbors))
+    plt.title(str(num_classes) + "-Class classification (k = %i)" % (num_neighbors))
     plt.show()
 
 
