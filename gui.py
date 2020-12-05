@@ -53,18 +53,19 @@ window = sg.Window(
     font="Helvetica 18",
 )
           
-          while True:             # Event Loop
-    event, values = window.Read()
-    if event in (None, 'Exit'):
-        break
-    if event == '2':
-        func('Pressed button 2')
-    elif event == '3':
-        func('Pressed button 3')
-    elif event == '4':
-        func('Pressed button 4')
-    elif event == '5':
-        func('Pressed button 5') 
+    # Event Loop
+    while True:
+        event, values = window.Read()
+        if event in (None, 'Exit'):
+            break
+        if event == '2':
+            func('Pressed button 2')
+        elif event == '3':
+            func('Pressed button 3')
+        elif event == '4':
+            func('Pressed button 4')
+        elif event == '5':
+            func('Pressed button 5') 
 
 # Add the plot to the window
 draw_figure(window["-CANVAS-"].TKCanvas, fig)
