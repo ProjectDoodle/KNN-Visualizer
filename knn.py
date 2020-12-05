@@ -7,8 +7,11 @@ Sources:
     - For color graph:      https://pythonspot.com/k-nearest-neighbors/
     - For helper functions: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 To-Do:
-    - Add a new (black) point and dipslay k closest neighbors with distance
+    - Add a new (black) point and dipslay k closest neighbors with distance on drawn lines
     - Redo plot to have more control over coordinates (or figure out how with current implementation)
+Notes:
+    - I believe the current plot setup should work (if we can update with an added point), but I need to figure out how
+      to 
 '''
 
 
@@ -44,8 +47,8 @@ Param x: x coordinate point
 Param y: y coordinate
 '''
 def euclidean_distance(x, y):
-    distance = 0.0
-    for i in range(len(x) - 1):
+    distance = 0
+    for i in range(0, x):
         distance += (x[i] - y[i]) ** 2
     return math.sqrt(distance)
 
@@ -133,7 +136,6 @@ def main(num_classes, num_neighbors, num_points, metric):
     # We create an instance of Neighbors Classifier and fit the data.
     # Implements the k-nearest neighbors vote
     clf = neighbors.KNeighborsClassifier(num_neighbors, weights='distance', p=metric)
-    print(clf)
     # Using the classifier to fit our coordinates with the target values (colors)
     clf.fit(coords, y)
 
@@ -152,6 +154,13 @@ def main(num_classes, num_neighbors, num_points, metric):
     plt.ylim(yy.min(), yy.max())
     plt.title(str(num_classes) + "-Class classification (k = %i)" % (num_neighbors))
     plt.ion()
+
+    # Drawing lines
+    # Currently not showing distance and making lines between all points
+    '''
+    for i in range(0, len(x_coords), 2):
+        plt.plot(x_coords[i:i+2], y_coords[i:i+2], 'ro-')
+    '''
     plt.show()
 
 

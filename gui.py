@@ -7,7 +7,7 @@ Sources:
     - For color graph:      https://pythonspot.com/k-nearest-neighbors/
     - For helper functions: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 To-Do:
-    - Add a new (black) point and dipslay k closest neighbors with distance
+    - Add a new (black) point and dipslay k closest neighbors with distance on drawn lines
     - Redo plot to have more control over coordinates (or figure out how with current implementation)
 '''
 
