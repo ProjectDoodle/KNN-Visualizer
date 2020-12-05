@@ -9,6 +9,9 @@ import plotly.graph_objects as go
 
 matplotlib.use("TkAgg")
 
+def func(message):
+    print(mess
+
 fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
 t = np.arange(0, 3, .01)
 fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
@@ -49,6 +52,19 @@ window = sg.Window(
     element_justification="center",
     font="Helvetica 18",
 )
+          
+          while True:             # Event Loop
+    event, values = window.Read()
+    if event in (None, 'Exit'):
+        break
+    if event == '2':
+        func('Pressed button 2')
+    elif event == '3':
+        func('Pressed button 3')
+    elif event == '4':
+        func('Pressed button 4')
+    elif event == '5':
+        func('Pressed button 5') 
 
 # Add the plot to the window
 draw_figure(window["-CANVAS-"].TKCanvas, fig)
