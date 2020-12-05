@@ -76,13 +76,13 @@ def main():
     # Specifiying k
     num_neighbors = 5
 
-    # Step size for graph
-    h = 5
-
     # Randomly generate num_points up to max_value
     num_points = 20
     max_value = 100
     coords = np.random.rand(num_points, 2) * max_value
+
+    # Step size for graph
+    h = 5
 
     # Array containing each class (0...n), where each element
     # corresponds to a color

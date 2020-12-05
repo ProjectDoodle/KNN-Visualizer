@@ -7,19 +7,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import plotly.graph_objects as go
 
+matplotlib.use("TkAgg")
+
 fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
 t = np.arange(0, 3, .01)
 fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
 
 
-matplotlib.use("TkAgg")
-
+# Graph
 def draw_figure(canvas, figure):
     figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
     figure_canvas_agg.draw()
     figure_canvas_agg.get_tk_widget().pack(side="top", fill="both", expand=1)
     return figure_canvas_agg
 
+# Buttons
 layout = [
     [sg.Text("K-Nearest Neighbors Visualizer")],
     [sg.Canvas(key="-CANVAS-")],
