@@ -70,14 +70,14 @@ def get_neighbors(train, test_row, num_neighbors):
 
 def main(num_classes, num_neighbors, num_points):
     # Number of data categories
-    num_classes = 3
+    #num_classes = 3
     classes = []
 
     # Specifiying k
-    num_neighbors = 5
+    #num_neighbors = 5
 
     # Randomly generate num_points up to max_value
-    num_points = 20
+    #num_points = 20
     max_value = 100
     coords = np.random.rand(num_points, 2) * max_value
 
