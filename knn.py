@@ -8,7 +8,7 @@ Sources:
     - For helper functions: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 To-Do:
     - Add a new (black) point and dipslay k closest neighbors with distance
-    - Interface with GUI
+    - Redo plot to have more control over coordinates (or figure out how with current implementation)
 '''
 
 
@@ -68,7 +68,7 @@ def get_neighbors(train, test_row, num_neighbors):
 	return neighbors
 
 
-def main(num_classes, num_neighbors, num_points):
+def main(num_classes, num_neighbors, num_points, metric):
     # Number of data categories
     #num_classes = 3
     classes = []
@@ -127,12 +127,13 @@ def main(num_classes, num_neighbors, num_points):
         cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF', '#FF8100'])
         cmap_bold = ListedColormap(['#FF0000', '#00FF00','#0011FF', '#FFCE00'])
     elif (num_classes == 5):
-        cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF', '#FF8100', '#F000FF'])
-        cmap_bold = ListedColormap(['#FF0000', '#00FF00','#0011FF', '#FFCE00', '#FF00DB'])
+        cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF', '#FF8100', '#CDC2B7'])
+        cmap_bold = ListedColormap(['#FF0000', '#00FF00','#0011FF', '#FFCE00', '#A49482'])
 
     # We create an instance of Neighbors Classifier and fit the data.
     # Implements the k-nearest neighbors vote
-    clf = neighbors.KNeighborsClassifier(num_neighbors, weights='distance')
+    clf = neighbors.KNeighborsClassifier(num_neighbors, weights='distance', p=metric)
+    print(clf)
     # Using the classifier to fit our coordinates with the target values (colors)
     clf.fit(coords, y)
 
@@ -150,9 +151,10 @@ def main(num_classes, num_neighbors, num_points):
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
     plt.title(str(num_classes) + "-Class classification (k = %i)" % (num_neighbors))
+    plt.ion()
     plt.show()
 
 
 
-if __name__=="__main__":
+if __name__== "__main__":
     main()

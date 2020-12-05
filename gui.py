@@ -1,3 +1,16 @@
+'''
+Authors: Matthew Robinson, Antonio Munoz
+Date: 11/23/20
+Class: CSE 489 ML
+Description: KNN Visualizer
+Sources:
+    - For color graph:      https://pythonspot.com/k-nearest-neighbors/
+    - For helper functions: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
+To-Do:
+    - Add a new (black) point and dipslay k closest neighbors with distance
+    - Redo plot to have more control over coordinates (or figure out how with current implementation)
+'''
+
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import PySimpleGUI as sg
@@ -14,6 +27,7 @@ matplotlib.use("TkAgg")
 num_classes = 0
 num_neighbors = 0
 num_points = 0
+metric = 0
 
 '''
 fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
@@ -57,9 +71,9 @@ while True:
     if event in (None, 'Exit'):
         break
     if event == 'L1':
-        break
+        metric = 1
     elif event == 'L2':
-        break;    
+        metric = 2
     elif event == 'num_classes2':
         num_classes = 2
     elif event == 'num_classes3':
@@ -91,11 +105,7 @@ while True:
     elif event == 'num_points60':
         num_points = 60
     elif event == 'apply':
-        main(num_classes, num_neighbors, num_points)
-
-        
-    #if ((num_classes not equal 0) && (num_neighbors not equal 0) && (num_points not equal 0)):
-    #    main(num_classes, num_neighbors, num_points)
+        main(num_classes, num_neighbors, num_points, metric)
 
 
 # Add the plot to the window
