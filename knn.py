@@ -68,7 +68,7 @@ def get_neighbors(train, test_row, num_neighbors):
 	return neighbors
 
 
-def main():
+def main(num_classes, num_neighbors, num_points):
     # Number of data categories
     num_classes = 3
     classes = []
@@ -109,8 +109,11 @@ def main():
     y = points['Color'].values
 
     # Calculating min, max, and limits
-    x_min, x_max = min(x_coords) - 1, max(x_coords) + 1
-    y_min, y_max = min(y_coords) - 1, max(y_coords) + 1
+    x_min, x_max = min(x_coords), max(x_coords)
+    y_min, y_max = min(y_coords), max(y_coords)
+
+    # np.meshgrid creates a rectangular array from 2 1D arrays
+    # np.arrange spaces an array by hj
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
     # Create color maps
@@ -127,16 +130,22 @@ def main():
         cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA','#00AAFF', '#FF8100', '#F000FF'])
         cmap_bold = ListedColormap(['#FF0000', '#00FF00','#0011FF', '#FFCE00', '#FF00DB'])
 
-    # We create an instance of Neighbours Classifier and fit the data.
+    # We create an instance of Neighbors Classifier and fit the data.
+    # Implements the k-nearest neighbors vote
     clf = neighbors.KNeighborsClassifier(num_neighbors, weights='distance')
+    # Using the classifier to fit our coordinates with the target values (colors)
     clf.fit(coords, y)
 
-    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    # Predict class labels
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])      # ravel() flattens an array
     Z = Z.reshape(xx.shape)
 
     # Setting up the plot
     plt.figure()
+    # Create a color plot
+    # xx and yy are coordinates of the corners, Z scales the data, and cmap is color map
     plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
+    # Scattering our points
     plt.scatter(x_coords, y_coords, c=y, cmap=cmap_bold)
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())

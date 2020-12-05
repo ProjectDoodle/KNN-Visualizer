@@ -7,10 +7,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import plotly.graph_objects as go
 
+from knn import *
+
 matplotlib.use("TkAgg")
 
 def func(message):
-    print(mess
+    print(message)
 
 fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
 t = np.arange(0, 3, .01)
@@ -53,13 +55,13 @@ window = sg.Window(
     font="Helvetica 18",
 )
           
-    # Event Loop
-  while True:             # Event Loop
+
+while True:          
     event, values = window.Read()
     if event in (None, 'Exit'):
         break
     if event == 'L1':
-        func('Pressed button L1')
+        main()
     elif event == 'L2':
         func('Pressed button L2')    
     elif event == 'num_classes2':
@@ -93,9 +95,11 @@ window = sg.Window(
     elif event == 'num_points60':
         func('Pressed button 60')
 
+
 # Add the plot to the window
 draw_figure(window["-CANVAS-"].TKCanvas, fig)
 
 event, values = window.read()
+
 
 window.close()
