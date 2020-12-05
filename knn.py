@@ -11,10 +11,8 @@ To-Do:
     - Redo plot to have more control over coordinates (or figure out how with current implementation)
 Notes:
     - I believe the current plot setup should work (if we can update with an added point), but I need to figure out how
-      to 
+      to add a point to draw lines from it to its nearest neighbors.
 '''
-
-
 
 # Standard powerful python tools
 #import matplotlib
