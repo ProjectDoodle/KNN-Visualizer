@@ -3,9 +3,6 @@ Authors: Matthew Robinson, Antonio Munoz
 Date: 11/23/20
 Class: CSE 489 ML
 Description: KNN Visualizer
-Sources:
-    - For color graph:      https://pythonspot.com/k-nearest-neighbors/
-    - For helper functions: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 To-Do:
     - Add a new (black) point and dipslay k closest neighbors with distance on drawn lines
     - Redo plot to have more control over coordinates (or figure out how with current implementation)
@@ -32,19 +29,6 @@ num_neighbors = 0
 num_points = 0
 metric = 0
 
-'''
-fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
-t = np.arange(0, 3, .01)
-fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
-'''
-
-
-# Graph
-def draw_figure(canvas, figure):
-    figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
-    figure_canvas_agg.draw()
-    figure_canvas_agg.get_tk_widget().pack(side="top", fill="both", expand=1)
-    return figure_canvas_agg
 
 # Buttons
 layout = [
@@ -58,7 +42,7 @@ layout = [
 ]
 
 
-# Create the form and show it without the plot
+# Create the window
 window = sg.Window(
     "KNN Visualizer",
     layout,
@@ -73,6 +57,8 @@ while True:
     event, values = window.Read()
     if event in (None, 'Exit'):
         break
+    if event == 'apply':
+        main(num_classes, num_neighbors, num_points, metric)
     if event == 'L1':
         metric = 1
     elif event == 'L2':
@@ -107,14 +93,8 @@ while True:
         num_points = 50 
     elif event == 'num_points60':
         num_points = 60
-    elif event == 'apply':
-        main(num_classes, num_neighbors, num_points, metric)
 
-
-# Add the plot to the window
-#draw_figure(window["-CANVAS-"].TKCanvas, fig)
 
 event, values = window.read()
-
 
 window.close()

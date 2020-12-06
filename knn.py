@@ -3,9 +3,6 @@ Authors: Matthew Robinson, Antonio Munoz
 Date: 11/23/20
 Class: CSE 489 ML
 Description: KNN Visualizer
-Sources:
-    - For color graph:      https://pythonspot.com/k-nearest-neighbors/
-    - For helper functions: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 To-Do:
     - Add a new (black) point and dipslay k closest neighbors with distance on drawn lines
     - Redo plot to have more control over coordinates (or figure out how with current implementation)
@@ -114,7 +111,7 @@ def main(num_classes, num_neighbors, num_points, metric):
     y_min, y_max = min(y_coords), max(y_coords)
 
     # np.meshgrid creates a rectangular array from 2 1D arrays
-    # np.arrange spaces an array by hj
+    # np.arrange spaces an array by h
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
     # Create color maps
